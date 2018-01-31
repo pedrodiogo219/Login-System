@@ -1,0 +1,22 @@
+<html>
+
+<head>
+  <title>uma página de testes</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename="css/bootstrap.min.css") }}">
+</head>
+
+<body>
+  <h1>Esse é um título</h1>
+  {% if name %}
+  <p>Bem vindo, {{name}}</p>
+  {% else %}
+  <p>Bem vindo!</p>
+  {% endif %}
+
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename="js/bootstrap.min.js")}}"></script>
+</body>
+
+
+</html>

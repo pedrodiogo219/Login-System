@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="col-md-4 mx-auto">
+  <h2>Register</h2>
+  <form action="" method="POST">
+    {{ form_signup.csrf_token }}
+    <div class="form-group">
+      <label>Name</label>
+      {{ form_signup.name(class="form-control", placeholder="Enter your name")}}
+
+      {% if form_signup.errors.name %}
+        <div class="alert alert-danger" role="alert">
+          <ul>
+          {% for e in form_signup.errors.name %}
+            <li> {{ e }} </li>
+          {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      {{ form_signup.email(class="form-control", placeholder="youremail@example.com") }}
+
+      {% if form_signup.errors.email %}
+
+        <div class="alert alert-danger" role="alert">
+          <ul>
+            {% for e in form_signup.errors.email %}
+              <li> {{ e }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      {{ form_signup.password(class="form-control") }}
+
+      {% if form_signup.errors.password %}
+        <div class="alert alert-danger" role="alert">
+          <ul>
+          {% for e in form_signup.errors.password %}
+            <li> {{ e }} </li>
+          {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label>Username</label>
+      {{ form_signup.username(class="form-control", placeholder="Enter your username") }}
+
+      {% if form_signup.errors.username %}
+        <div class="alert alert-danger" role="alert">
+          <ul>
+          {% for e in form_signup.errors.username %}
+            <li> {{ e }} </li>
+          {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    </div>
+
+
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+
+</div>
+{% endblock %}
