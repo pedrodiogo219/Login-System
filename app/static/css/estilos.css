@@ -1,0 +1,10 @@
+body {
+  padding: 20px 0;
+}
+#conteudo{
+	padding-top: 20px;
+}
+
+#textBox{
+	min-height: 250px;
+}

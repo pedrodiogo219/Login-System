@@ -1,4 +1,4 @@
-#!/home/pedro/Desktop/aula_flask/venv/bin/python
+#!/home/pedrodiogo/Desktop/cursoflask/venv/bin/python
 
 import sys
 import getopt
