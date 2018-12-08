@@ -1,11 +1,11 @@
 from flask import render_template, flash, redirect, url_for
 from flask_login import login_user, logout_user
-from app import app, db, lm#, conn
+from app import app, db, lm, conn
 
 from app.models.forms import LoginForm, CadForm
 from app.models.tables import User
 
-#from sqlalchemy.sql import select, insert
+from sqlalchemy.sql import select, insert, and_, or_, not_
 
 
 @lm.user_loader
@@ -47,19 +47,25 @@ def register():
 	form = CadForm()
 	if form.validate_on_submit():
 		if form.password.data == form.re_password.data:
-			flash("dados okay")
-			"""
-				s = select([User])
+			s = select([User]).where(or_(User.username==form.username.data, User.email==form.email.data)).limit(1)
 			result = conn.execute(s)
-			print(result)
-			for row in result:
-				print("row: " + row['username'])
-				flash("user encontrado: " + row['username'])
 
-			stmt = insert(User).values(username=form.username.data, email=form.email.data,
+			is_unique = True
+			for row in result:
+				is_unique = False
+				break
+
+			if not is_unique:
+				flash("This is user is already registered.")
+			else:
+				stmt = insert(User).values(username=form.username.data, email=form.email.data,
 									   password=form.password.data, name=form.username.data)
-			conn.execute(stmt)
-			"""
+				conn.execute(stmt)
+				flash("Successfully registered! Please log in, now.")
+				return redirect(url_for('login'))
+		else:
+			flash("The password don't match.")
+
 
 
 	return render_template('register.html', form=form)

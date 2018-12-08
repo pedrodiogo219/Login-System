@@ -18,8 +18,8 @@ manager.add_command('db',  MigrateCommand)
 lm = LoginManager()
 lm.init_app(app)
 
-#engine = create_engine('postgresql://postgres:postgres@localhost:5432', echo=True)
-#conn = engine.connect()
+engine = create_engine('postgresql://postgres:postgres@localhost:5432', echo=True)
+conn = engine.connect()
 from app.models import tables
 
 from app.controllers import default
