@@ -1,11 +1,11 @@
 from flask import render_template, flash, redirect, url_for
 from flask_login import login_user, logout_user
-from app import app, db, lm, conn
+from app import app, db, lm#, conn
 
 from app.models.forms import LoginForm, CadForm
 from app.models.tables import User
 
-from sqlalchemy.sql import select, insert
+#from sqlalchemy.sql import select, insert
 
 
 @lm.user_loader
@@ -48,14 +48,18 @@ def register():
 	if form.validate_on_submit():
 		if form.password.data == form.re_password.data:
 			flash("dados okay")
-			s = select([User])
+			"""
+				s = select([User])
 			result = conn.execute(s)
 			print(result)
 			for row in result:
 				print("row: " + row['username'])
 				flash("user encontrado: " + row['username'])
 
-			stmt = insert(User).values(id=2, username=form.username.data, password=form.password.data, name=form.username.data,
-								 email='something@email.com')
+			stmt = insert(User).values(username=form.username.data, email=form.email.data,
+									   password=form.password.data, name=form.username.data)
 			conn.execute(stmt)
+			"""
+
+
 	return render_template('register.html', form=form)
