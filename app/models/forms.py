@@ -1,14 +1,17 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField
+from wtforms import StringField, PasswordField, BooleanField, ValidationError
 from wtforms.validators import DataRequired, EqualTo, Email
 
 class LoginForm(FlaskForm):
-	username = StringField("username", validators=[DataRequired()])
-	password = PasswordField("password", validators=[DataRequired()])
-	remember_me = BooleanField("remember_me")
+	email = StringField("email", validators=[DataRequired(), Email()])
+	senha = PasswordField("senha", validators=[DataRequired()])
+
 
 class CadForm(FlaskForm):
-	username = StringField("username", validators=[DataRequired()])
+	nome = StringField("nome", validators=[DataRequired()])
+	telefonefixo = StringField("telefonefixo", validators=[])
+	celular = StringField("celular", validators=[])
 	email = StringField("email", validators=[DataRequired(), Email()])
-	password = PasswordField("password", validators=[DataRequired(), EqualTo('re_password', message='Passwords must match')])
-	re_password = PasswordField("re_password", validators=[DataRequired()])
+	senha = PasswordField("senha", validators=[DataRequired(), EqualTo('confirmasenha', message='As senhas não batem')])
+	confirmasenha = PasswordField("confirmasenha", validators=[DataRequired()])
+	assinante = BooleanField("assinante")

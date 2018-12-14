@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 25200192e3ab
+Revision ID: 00ab271704ee
 Revises: 
-Create Date: 2018-12-08 21:45:31.395692
+Create Date: 2018-12-13 22:14:05.321431
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '25200192e3ab'
+revision = '00ab271704ee'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -66,7 +66,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('nome')
     )
     op.create_table('usuario',
-    sa.Column('codpessoa', sa.Integer(), nullable=False),
+    sa.Column('codpessoa', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('nome', sa.String(length=100), nullable=False),
     sa.Column('telefonefixo', sa.String(length=15), nullable=True),
     sa.Column('telefonecelular', sa.String(length=15), nullable=True),
@@ -88,11 +88,11 @@ def upgrade():
     sa.PrimaryKeyConstraint('produto', 'categoria_produto')
     )
     op.create_table('contem',
-    sa.Column('loja', sa.Integer(), nullable=True),
+    sa.Column('loja', sa.Integer(), nullable=False),
     sa.Column('produto', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['loja'], ['loja.codloja'], ),
     sa.ForeignKeyConstraint(['produto'], ['produto.cod_produto'], ),
-    sa.PrimaryKeyConstraint('produto')
+    sa.PrimaryKeyConstraint('loja', 'produto')
     )
     op.create_table('envia_para',
     sa.Column('assinante', sa.Integer(), nullable=False),
@@ -165,13 +165,13 @@ def upgrade():
     )
     op.create_table('espetaculo',
     sa.Column('cod_espetaculo', sa.Integer(), nullable=False),
-    sa.Column('sala', sa.Integer(), nullable=True),
+    sa.Column('codsala', sa.Integer(), nullable=True),
     sa.Column('nome', sa.String(length=70), nullable=False),
     sa.Column('duracao', sa.Integer(), nullable=False),
     sa.Column('descricao', sa.String(length=300), nullable=False),
     sa.Column('classificacao', sa.Integer(), nullable=False),
     sa.Column('linguagem', sa.String(length=30), nullable=False),
-    sa.ForeignKeyConstraint(['sala'], ['sala.codsala'], ),
+    sa.ForeignKeyConstraint(['codsala'], ['sala.codsala'], ),
     sa.PrimaryKeyConstraint('cod_espetaculo')
     )
     op.create_table('categoria_espetaculo',

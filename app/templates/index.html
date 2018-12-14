@@ -1,45 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'mainPage.html' %}
 
 {% block title %} {{ super() }} - Index{% endblock %}
 
 
 
-{% block content %}
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <div class="alert alert-warning">
-                <ul class=flashes>
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
-    {% endwith %}
-
-<div class="jumbotron">
-  <h1>Welcome to the home page!</h1>
-  <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-  <p><a class="btn btn-lg btn-success" href="{{ url_for('login') }}" role="button">Sign up today</a></p>
-</div>
-
-<div class="row marketing">
-  <div class="col-lg-6">
-    <h4>Subheading</h4>
-    <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-    <h4>Subheading</h4>
-    <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-  </div>
-
-  <div class="col-lg-6">
-    <h4>Subheading</h4>
-    <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-    <h4>Subheading</h4>
-    <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-  </div>
-</div>
+{% block manchete %}
+        <h1 class="display-1">Seja bem-vindo ao Turing Center!</h1>
+        <p class="lead">Você não precisa saber decodificar para descobrir que este é o melhor shopping para a sua família.</p>
+        <p><a class="btn btn-lg btn-success" href="{{ url_for('Lojas') }}" role="button">Veja nossas lojas</a></p>
 {% endblock %}
+

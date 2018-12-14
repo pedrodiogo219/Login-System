@@ -2,28 +2,41 @@
 
 
 {% block content %}
-<div class="panel panel-default">
-    <div class="panel-heading">{{ tab.__tablename__ }}</div>
-    <!--<div class="panel-body"><p>Você está vendo agora os 10 primeiros registros da tabela {{ tab.__tablename__ }}:</p></div>-->
-    <table class="table">
-        <thead>
-        <tr>
-            {% for column in tab.__table__.columns %}
-                <th>{{ column.name }}</th>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-warning">
+                <ul class=flashes>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">{{ tab.__tablename__ }}</div>
+        <!--<div class="panel-body"><p>Você está vendo agora os 10 primeiros registros da tabela {{ tab.__tablename__ }}:</p></div>-->
+        <table class="table">
+            <thead>
+            <tr>
+                {% for column in tab.__table__.columns %}
+                    <th>{{ column.name }}</th>
+                {% endfor %}
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in dados %}
+                <tr>
+                    {% for column in row %}
+                        <td>{{ column }}</td>
+                    {% endfor %}
+                </tr>
             {% endfor %}
 
-        </tr>
-        </thead>
-        <tbody>
-        {% for row in dados %}
-            <tr>
-                {% for column in row %}
-                    <td>{{ column }}</td>
-                {% endfor %}
-            </tr>
-        {% endfor %}
-
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

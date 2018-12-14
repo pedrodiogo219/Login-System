@@ -15,18 +15,18 @@
 {% endwith %}
 <div class="jumbotron">
     <div class="row">
-        <div class="col-md-4 col-md-offset-4">
+        <div class="col-md-6 offset-md-3">
             <h2>Register</h2>
             <form action="" method="POST">
                 {{ form.csrf_token }}
                 <div class="form-group">
-                    <label>Username</label>
-                    {{ form.username(class="form-control", placeholder="your username")}}
+                    <label>Nome</label>
+                    {{ form.nome(class="form-control", placeholder="Seu nome completo")}}
 
-                    {% if form.errors.username %}
+                    {% if form.errors.nome %}
                         <div class="alert alert-danger" role="alert">
                             <ul>
-                                {% for e in form.errors.username %}
+                                {% for e in form.errors.nome %}
                                     <li>{{ e }} </li>
                                 {% endfor %}
                             </ul>
@@ -37,7 +37,7 @@
 
                 <div class="form-group">
                     <label>Emaill</label>
-                    {{ form.email(class="form-control", placeholder="your email") }}
+                    {{ form.email(class="form-control", placeholder="Seu email") }}
 
                     {% if form.errors.email %}
                         <div class="alert alert-danger" role="alert">
@@ -52,12 +52,22 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Password</label>
-                    {{ form.password(class="form-control")}}
-                    {% if form.errors.password %}
+                    <label>Telefone Celular</label>
+                    {{ form.celular(class="form-control", placeholder="Passa o zap") }}
+                </div>
+                <div class="form-group">
+                    <label>Telefone Fixo</label>
+                    {{ form.telefonefixo(class="form-control", placeholder="Você ainda tem isso?") }}
+                </div>
+
+
+                <div class="form-group">
+                    <label>Senha</label>
+                    {{ form.senha(class="form-control", placeholder="Escolha sua senha com cuidado")}}
+                    {% if form.errors.senha %}
                         <div class="alert alert-danger" role="alert">
                             <ul>
-                                {% for e in form.errors.password %}
+                                {% for e in form.errors.senha %}
                                     <li>{{ e }} </li>
                                 {% endfor %}
                             </ul>
@@ -67,12 +77,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Retype password</label>
-                    {{ form.re_password(class="form-control") }}
-                    {% if form.errors.re_password %}
+                    <label>Confirme sua senha</label>
+                    {{ form.confirmasenha(class="form-control", placeholder="Digite sua senha novamente") }}
+                    {% if form.errors.confirmasenha%}
                         <div class="alert alert-danger" role="alert">
                             <ul>
-                                {% for e in form.errors.re_password %}
+                                {% for e in form.errors.confirmasenha%}
                                     <li>{{ e }} </li>
                                 {% endfor %}
                             </ul>
@@ -81,11 +91,16 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    {{ form.assinante() }}
+                    <label>Assine nossa newsletter</label>
                 </div>
 
                 <div class="form-group">
-                    <label><a href="{{ url_for('login') }}">Already have an account? Sign in now!</a></label>
+                    <button type="submit" class="btn btn-default">Enviar</button>
+                </div>
+
+                <div class="form-group">
+                    <label><a href="{{ url_for('login') }}">Já tem uma conta? Faça login agora!</a></label>
                 </div>
             </form>
         </div>

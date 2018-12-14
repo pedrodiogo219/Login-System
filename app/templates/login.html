@@ -3,8 +3,8 @@
 
 {% block content %}
     <div class="jumbotron">
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
+        <div class="justify-content-center">
+            <div class="col-md-6 offset-md-3">
                 <h2>Login</h2>
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
@@ -20,13 +20,13 @@
                 <form action="" method="POST">
                     {{ form.csrf_token }}
                     <div class="form-group">
-                        <label>Username</label>
-                        {{ form.username(class="form-control", placeholder="your_username")}}
+                        <label>Nome</label>
+                        {{ form.email(class="form-control", placeholder="Seu endereço de email")}}
 
-                        {% if form.errors.username %}
+                        {% if form.errors.email %}
                             <div class="alert alert-danger" role="alert">
                                 <ul>
-                                    {% for e in form.errors.username %}
+                                    {% for e in form.errors.email %}
                                         <li>{{ e }} </li>
                                     {% endfor %}
                                 </ul>
@@ -36,11 +36,11 @@
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        {{ form.password(class="form-control")}}
-                        {% if form.errors.password %}
+                        {{ form.senha(class="form-control", placeholder="Sua senha")}}
+                        {% if form.errors.senha %}
                             <div class="alert alert-danger" role="alert">
                                 <ul>
-                                    {% for e in form.errors.password %}
+                                    {% for e in form.errors.senha %}
                                         <li>{{ e }} </li>
                                     {% endfor %}
                                 </ul>
@@ -48,19 +48,18 @@
 
                         {% endif %}
                     </div>
-                    <div class="checkbox">
-                        <label>{{ form.remember_me }} Remember me</label>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default">Enviar</button>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-default">Submit</button>
-                    </div>
-                    <div class="form-group">
-                        <label><a href="{{ url_for('register') }}">Doesn't have an account? Register now!</a></label>
+                        <label><a href="{{ url_for('register') }}">Não tem uma conta ainda? Se cadastre!</a></label>
                     </div>
 
                 </form>
             </div>
         </div>
+
+
 
     </div>
 

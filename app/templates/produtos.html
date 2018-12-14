@@ -1,0 +1,26 @@
+{% extends 'mainPage.html' %}
+
+{% set ns = namespace(siteLoja=url_for('Lojas')) %}
+{% block manchete %}
+
+    {% for row in dadosLoja %}
+        <h1 class="display-1">{{ row.nomeloja }}</h1>
+        {% set ns.siteLoja = row.site %}
+    {% endfor %}
+    <h1 class="display-4">Conheça nossos melhores produtos!</h1>
+{% endblock %}
+
+
+
+{% block cards %}
+    {% for row in dadosProd %}
+        <div class="col-md-4">
+            <div class="{{ shufflecards() }}" style="max-width: 18rem;">
+                <div class="card-header"> {{ row.nome }} </div>
+                <div class="card-body">
+                    <p class="card-text"><a href="http://{{ ns.siteLoja }}">Conheça mais</a></p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

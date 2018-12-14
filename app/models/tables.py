@@ -3,26 +3,11 @@ from app import db
 class User(db.Model):
 	__tablename__ = "users"
 
-	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String, unique=True)
 	password = db.Column(db.String)
 	name = db.Column(db.String)
 	email = db.Column(db.String, unique=True)
-
-	@property
-	def is_authenticated(self):
-		return True
-
-	@property
-	def is_active(self):
-		return True
-
-	@property
-	def is_anonymous(self):
-		return False
-
-	def get_id(self):
-		return str(self.id)
 
 
 	def __init__(self, username, password, name, email):
@@ -63,6 +48,7 @@ class Follow(db.Model):
 	
 
 """
+
 
 class Shopping(db.Model):
 	__tablename__= "shopping"
@@ -113,12 +99,29 @@ class CasaEspetaculos(db.Model):
 class Usuario(db.Model):
 	__tablename__ = "usuario"
 
-	codpessoa= db.Column(db.Integer, primary_key=True)
+	codpessoa= db.Column(db.Integer, primary_key=True, autoincrement=True)
 	nome= db.Column(db.String(100), nullable=False)
 	telefonefixo= db.Column(db.String(15))
 	telefonecelular= db.Column(db.String(15))
 	email= db.Column(db.String(60), nullable=False, unique=True)
 	senha= db.Column(db.String(20), nullable=False)
+
+	@property
+	def is_authenticated(self):
+		return True
+
+	@property
+	def is_active(self):
+		return True
+
+	@property
+	def is_anonymous(self):
+		return False
+
+	def get_id(self):
+		return str(self.codpessoa)
+
+
 
 
 class Assinante(db.Model):
@@ -223,14 +226,14 @@ class ESPETACULO(db.Model):
 	__tablename__ = "espetaculo"
 
 	cod_espetaculo = db.Column(db.Integer, primary_key=True)
-	sala = db.Column(db.Integer, db.ForeignKey('sala.codsala'))
+	codsala = db.Column(db.Integer, db.ForeignKey('sala.codsala'))
 	nome = db.Column(db.String(70), nullable=False)
 	duracao = db.Column(db.Integer, nullable=False)
 	descricao = db.Column(db.String(300), nullable=False)
 	classificacao = db.Column(db.Integer, nullable=False)
 	linguagem = db.Column(db.String(30), nullable=False)
 
-	fk_sala =  db.relationship('sala', foreign_keys=sala)
+	fk_sala =  db.relationship('Sala', foreign_keys=codsala)
 
 
 class CATEGORIA_ESPETACULO(db.Model):
@@ -239,7 +242,7 @@ class CATEGORIA_ESPETACULO(db.Model):
 	espetaculo = db.Column(db.Integer, db.ForeignKey('espetaculo.cod_espetaculo'),primary_key=True)
 	categoria_espetaculo = db.Column(db.String(30),  primary_key=True)
 
-	fk_espetaculo = db.relationship('espetaculo', foreign_keys=espetaculo)
+	fk_espetaculo = db.relationship('ESPETACULO', foreign_keys=espetaculo)
 
 
 
@@ -256,7 +259,7 @@ class CATEGORIA_PRODUTO(db.Model):
 	produto = db.Column(db.Integer, db.ForeignKey('produto.cod_produto'), primary_key=True)
 	categoria_produto = db.Column(db.String(30), primary_key=True)
 
-	fk_produto = db.relationship('produto', foreign_keys=produto)
+	fk_produto = db.relationship('PRODUTO', foreign_keys=produto)
 
 
 
@@ -266,18 +269,18 @@ class ENVIA_PARA(db.Model):
 	assinante = db.Column(db.Integer, db.ForeignKey('assinante.codpessoa'), primary_key=True)
 	newsletter =  db.Column(db.Integer, db.ForeignKey('newsletter.codnewsletter'),  primary_key=True)
 
-	fk_assinante = db.relationship('assinante', foreign_keys=assinante)
-	fk_newsletter = db.relationship('newsletter', foreign_keys=newsletter)
+	fk_assinante = db.relationship('Assinante', foreign_keys=assinante)
+	fk_newsletter = db.relationship('Newsletter', foreign_keys=newsletter)
 
 
 class CONTEM(db.Model):
 	__tablename__ = "contem"
 
-	loja = db.Column(db.Integer,  db.ForeignKey('loja.codloja', primary_key=True))
+	loja = db.Column(db.Integer,  db.ForeignKey('loja.codloja'), primary_key=True)
 	produto = db.Column(db.Integer,  db.ForeignKey('produto.cod_produto'), primary_key=True)
 
-	fk_loja = db.relationship('loja', foreign_keys=loja)
-	fk_produto = db.relationship('produto', foreign_keys=produto)
+	fk_loja = db.relationship('Loja', foreign_keys=loja)
+	fk_produto = db.relationship('PRODUTO', foreign_keys=produto)
 	
 
 class SESSAO(db.Model):
@@ -288,4 +291,19 @@ class SESSAO(db.Model):
 	data = db.Column(db.Date,  nullable=False)
 	hora = db.Column(db.Time, nullable=False)
 
-	fk_espetaculo = db.relationship('espetaculo', foreign_keys=espetaculo)
+	fk_espetaculo = db.relationship('ESPETACULO', foreign_keys=espetaculo)
+
+"""
+def getTable(s):
+	if s == "Lojas":
+		return Loja
+	if s == "Newsletter":
+		return Newsletter
+	if s == "Servicos":
+		return Servicos
+	if s == "Sessao":
+		return SESSAO
+
+	return None
+
+"""

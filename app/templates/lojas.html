@@ -1,0 +1,25 @@
+{% extends 'mainPage.html' %}
+
+
+{% block manchete %}
+<h1 class="display-1">Lojas</h1>
+<h1>Venha conhecer as nossas maravilhosas lojas</h1>
+{% endblock %}
+
+
+
+{% block cards %}
+    {% for row in result %}
+        <div class="col-md-4">
+            <div class="{{ shufflecards() }}" style="max-width: 18rem;">
+                <div class="card-header"> <a href="{{ url_for('Lojas', lojaBuscada=row.nomeloja) }}">{{ row.nomeloja }}</a></div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ row.telefone }}</h5>
+                    <p class="card-text">{{ row.site }}</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+
