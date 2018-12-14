@@ -15,3 +15,16 @@ class CadForm(FlaskForm):
 	senha = PasswordField("senha", validators=[DataRequired(), EqualTo('confirmasenha', message='As senhas não batem')])
 	confirmasenha = PasswordField("confirmasenha", validators=[DataRequired()])
 	assinante = BooleanField("assinante")
+
+
+class AltForm(FlaskForm):
+	codpessoa = StringField("codpessoa", validators=[DataRequired()])
+	nome = StringField("nome", validators=[DataRequired()])
+	telefonefixo = StringField("telefonefixo", validators=[])
+	telefonecel = StringField("celular", validators=[])
+	email = StringField("email", validators=[DataRequired(), Email()])
+	senha = PasswordField("senha", validators=[DataRequired(), EqualTo('confirmasenha', message='As senhas não batem')])
+	confirmasenha = PasswordField("confirmasenha", validators=[DataRequired()])
+	assinante = BooleanField("assinante")
+
+

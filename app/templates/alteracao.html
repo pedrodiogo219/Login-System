@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h2>Seus dados</h2>
+                <form action="" method="POST">
+                    {{ form.csrf_token }}
+                    <fieldset disabled>
+                    <div class="form-group">
+                        <label for="disabledTextInput">Seu código</label>
+                        {{ form.codpessoa(type="text", id="disabledTextInput", class="form-control") }}
+                    </div>
+                    </fieldset>
+
+                    <div class="form-group">
+                        <label>Nome</label>
+                        {{ form.nome(class="form-control", placeholder="Seu nome completo")}}
+
+                        {% if form.errors.nome %}
+                            <div class="alert alert-danger" role="alert">
+                                <ul>
+                                    {% for e in form.errors.nome %}
+                                        <li>{{ e }} </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label>Emaill</label>
+                        {{ form.email(class="form-control", placeholder="Seu email") }}
+
+                        {% if form.errors.email %}
+                            <div class="alert alert-danger" role="alert">
+                                <ul>
+                                    {% for e in form.errors.email %}
+                                        <li>{{ e }} </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label>Telefone Celular</label>
+                        {{ form.telefonecel(class="form-control", placeholder="Passa o zap") }}
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone Fixo</label>
+                        {{ form.telefonefixo(class="form-control", placeholder="Você ainda tem isso?") }}
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Senha</label>
+                        {{ form.senha(class="form-control", placeholder="Escolha sua senha com cuidado")}}
+                        {% if form.errors.senha %}
+                            <div class="alert alert-danger" role="alert">
+                                <ul>
+                                    {% for e in form.errors.senha %}
+                                        <li>{{ e }} </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirme sua senha</label>
+                        {{ form.confirmasenha(class="form-control", placeholder="Digite sua senha novamente") }}
+                        {% if form.errors.confirmasenha%}
+                            <div class="alert alert-danger" role="alert">
+                                <ul>
+                                    {% for e in form.errors.confirmasenha%}
+                                        <li>{{ e }} </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

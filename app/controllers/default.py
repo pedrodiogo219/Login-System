@@ -1,14 +1,11 @@
-from flask import render_template, flash, redirect, url_for
-from flask_login import login_user, logout_user
-from app import app, db, lm, conn, engine, session
+from flask import render_template, flash, redirect, url_for, request
+from flask_login import login_user, logout_user, current_user
+from app import app, lm, conn, session
 
-from app.models.forms import LoginForm, CadForm
+from app.models.forms import LoginForm, CadForm, AltForm
 import app.models.tables as tables
 from sqlalchemy import func
-from sqlalchemy.sql import select, insert, and_, or_, not_
-
-from app.controllers.functions import pesquisa_primeiros
-
+from sqlalchemy.sql import select, insert, and_, or_, not_, update
 
 
 @app.route("/index")
@@ -86,7 +83,7 @@ def register():
 					stmt = insert(tables.Usuario).values(
 						nome=form.nome.data,
 						telefonefixo = form.telefonefixo.data,
-					 	telefonecelular = form.celular.data,
+					 	telefonecel = form.celular.data,
 					 	email=form.email.data,
 					 	senha=form.senha.data
 					)
@@ -105,17 +102,7 @@ def register():
 				if not is_unique:
 					flash("Esse usuário já está cadastrado como assinante.")
 				else:
-					"""
-					stmt = insert(tables.Assinante).values(
-						codpessoa=99,
-						nome=form.nome.data,
-						telefonefixo = form.telefonefixo.data,
-						telefonecelular = form.celular.data,
-						email=form.email.data,
-						senha=form.senha.data
-					)
-					conn.execute(stmt)
-					"""
+
 					session.execute(func.insere_assinante(form.nome.data,form.telefonefixo.data,form.celular.data,form.email.data,form.senha.data))
 					session.commit()
 
@@ -129,3 +116,42 @@ def register():
 
 	return render_template('register.html', form=form)
 
+
+@app.route('/alteracao/<cod>', methods=["GET", "POST"])
+def alteracao(cod):
+	Cod = int(cod)
+	form=AltForm()
+	if request.method == "POST":
+
+			if form.senha.data == form.confirmasenha.data:
+
+				if not form.assinante.data:
+					s = update(tables.Usuario).values(
+						nome=form.nome.data,
+						telefonefixo=form.telefonefixo.data,
+						telefonecel=form.telefonecel.data,
+						email=form.email.data,
+						senha=form.senha.data
+					).where(tables.Usuario.codpessoa==Cod)
+					conn.execute(s)
+				else:
+					session.execute(func.insere_assinante(form.nome.data,form.telefonefixo.data,form.telefonecel.data,form.email.data,form.senha.data))
+					session.commit()
+
+				return redirect(url_for('login'))
+			else:
+				flash("As senhas não batem.")
+	else:
+
+		if current_user.is_authenticated and current_user.get_id() == cod:
+			s = select([tables.Usuario]).where(tables.Usuario.codpessoa==cod)
+			result = conn.execute(s)
+			for row in result:
+				form = AltForm(obj=row)
+
+			return render_template('alteracao.html', form=form)
+		else:
+			flash("usuario nao autenticado")
+			return redirect(url_for('login'))
+
+	return redirect(url_for('index'))
